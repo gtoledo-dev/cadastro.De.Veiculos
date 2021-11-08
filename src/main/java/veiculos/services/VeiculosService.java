@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
 import veiculos.entities.Veiculos;
@@ -30,7 +31,12 @@ public class VeiculosService {
 	}
 
 	public void delete(Long id) {
-		repository.deleteById(id);
+		try {
+			repository.deleteById(id);
+		} catch (EmptyResultDataAccessException e) {
+			e.printStackTrace();
+			throw new ResourceNotFoundException(id);
+		}
 	}
 
 	public Veiculos updateVeiculos(Long id, Veiculos obj) {
