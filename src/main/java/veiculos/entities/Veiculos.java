@@ -2,13 +2,21 @@ package veiculos.entities;
 
 import java.io.Serializable;
 import java.time.Instant;
-import java.time.format.DateTimeFormatter;
 import java.util.Objects;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 
+import org.hibernate.annotations.GeneratorType;
+
+@Entity
 public class Veiculos implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	private String veiculo;
 	private String marca;
