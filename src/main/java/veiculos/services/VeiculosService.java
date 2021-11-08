@@ -3,6 +3,8 @@ package veiculos.services;
 import java.util.List;
 import java.util.Optional;
 
+import javax.persistence.EntityNotFoundException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
@@ -40,9 +42,13 @@ public class VeiculosService {
 	}
 
 	public Veiculos updateVeiculos(Long id, Veiculos obj) {
-		Veiculos entityVeiculos = repository.getOne(id);
-		updateVeiculos(entityVeiculos, obj);
-		return repository.save(entityVeiculos);
+		try {
+			Veiculos entityVeiculos = repository.getOne(id);
+			updateVeiculos(entityVeiculos, obj);
+			return repository.save(entityVeiculos);
+		} catch (EntityNotFoundException e) {
+			throw new ResourceNotFoundException(id);
+		}
 	}
 
 	private void updateVeiculos(Veiculos entityVeiculos, Veiculos obj) {
