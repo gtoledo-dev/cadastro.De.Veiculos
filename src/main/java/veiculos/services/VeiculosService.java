@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import veiculos.entities.Veiculos;
 import veiculos.repositories.VeiculosRepository;
+import veiculos.services.exceptions.ResourceNotFoundException;
 
 @Service
 public class VeiculosService {
@@ -21,7 +22,7 @@ public class VeiculosService {
 
 	public Veiculos findById(Long id) {
 		Optional<Veiculos> obj = repository.findById(id);
-		return obj.get();
+		return obj.orElseThrow(() -> new ResourceNotFoundException(id));
 	}
 
 	public Veiculos insert(Veiculos obj) {

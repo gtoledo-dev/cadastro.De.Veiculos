@@ -11,9 +11,15 @@ import javax.persistence.Id;
 
 import org.hibernate.annotations.GeneratorType;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonFormat.Shape;
+import com.fasterxml.jackson.databind.jsonFormatVisitors.JsonFormatTypes;
+
 @Entity
 public class Veiculos implements Serializable{
 	private static final long serialVersionUID = 1L;
+
+	private static final Shape JsonFormat = null;
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -23,7 +29,11 @@ public class Veiculos implements Serializable{
 	private Integer ano;
 	private String descricao;
 	private String vendido;
+	
+	@JsonFormat(shape = com.fasterxml.jackson.annotation.JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss'Z'", timezone = "GMT")
 	private Instant created;
+	
+	@JsonFormat(shape = com.fasterxml.jackson.annotation.JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss'Z'", timezone = "GMT")
 	private Instant updated;
 	
 	public Veiculos() {
